@@ -7,7 +7,7 @@ import heroImage from "@/assets/hero-artisans.jpg";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
@@ -47,7 +47,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 
