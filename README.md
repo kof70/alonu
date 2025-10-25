@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# ALONU - Plateforme d'Artisans
 
-## Project info
+Plateforme de mise en relation avec des artisans locaux vérifiés au Togo.
 
-**URL**: https://lovable.dev/projects/03545557-7c21-4d69-9f70-8dbbb452513d
+## Installation
 
-## How can I edit this code?
+Installer les dépendances avec pnpm :
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/03545557-7c21-4d69-9f70-8dbbb452513d) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+pnpm install
 ```
 
-**Edit a file directly in GitHub**
+## Développement
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Démarrer le serveur de développement :
 
-**Use GitHub Codespaces**
+```bash
+pnpm dev
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+L'application sera accessible sur `http://localhost:5173`
 
-## What technologies are used for this project?
+## Build
 
-This project is built with:
+Créer une version de production :
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+pnpm build
+```
 
-## How can I deploy this project?
+## Prévisualisation
 
-Simply open [Lovable](https://lovable.dev/projects/03545557-7c21-4d69-9f70-8dbbb452513d) and click on Share -> Publish.
+Prévisualiser le build de production :
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+pnpm preview
+```
 
-Yes, you can!
+## Structure du Projet
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- `/src/pages/` - Pages principales de l'application
+  - `Index.tsx` - Page d'accueil avec carousel et catégories
+  - `CategoriesArtisans.tsx` - Page de recherche d'artisans par catégorie
+  - `ArtisanProfile.tsx` - Page de profil détaillé d'un artisan
+  - `Login.tsx` - Page de connexion
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- `/src/components/` - Composants réutilisables
+  - `/ui/` - Composants UI de base (Button, Card, Input, etc.)
+  - `/layout/` - Composants de mise en page (Footer, etc.)
+
+- `/src/contexts/` - Contextes React (AuthContext)
+- `/src/hooks/` - Hooks personnalisés
+- `/src/lib/` - Utilitaires
+
+## Technologies
+
+- **React 18** avec TypeScript
+- **Vite** - Build tool
+- **React Router** - Routing
+- **Tailwind CSS** - Styling
+- **Radix UI** - Composants UI accessibles
+- **Lucide React** - Icônes
+- **React Icons** - Icônes sociales
+
+## Couleurs de la Marque
+
+- Primary (Orange): `#FF6A00`
+- Secondary (Bleu): `#0052CC`
+- Accent (Vert): `#00C48C`
+- Logo (Vert foncé): `#006E4F`
+
+
+
+
+
+
+
+
+
+
+

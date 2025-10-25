@@ -1,35 +1,25 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import CategoryPage from "./pages/CategoryPage";
-import ArtisanProfile from "./pages/ArtisanProfile";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from '@/contexts/AuthContext'
+import Index from '@/pages/Index'
+import CategoriesArtisans from '@/pages/CategoriesArtisans'
+import ArtisanProfile from '@/pages/ArtisanProfile'
+import Login from '@/pages/Login'
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/category/:categoryId" element={<CategoryPage />} />
-          <Route path="/artisan/:artisanId" element={<ArtisanProfile />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/categories" element={<CategoriesArtisans />} />
+          <Route path="/artisans" element={<CategoriesArtisans />} />
+          <Route path="/artisan/:id" element={<ArtisanProfile />} />
           <Route path="/login" element={<Login />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </Router>
+    </AuthProvider>
+  )
+}
 
-export default App;
+export default App

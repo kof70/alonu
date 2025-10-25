@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build files
+/assets/index-*.js
+/assets/index-*.css
+tailwind.config.recovered.js
+photorec.log
+
+
+
+
+
+
+
+
+
+
+
