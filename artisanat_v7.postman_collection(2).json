@@ -1,0 +1,4554 @@
+{
+	"info": {
+		"_postman_id": "40b4a039-d7c7-4719-b577-debebbb61857",
+		"name": "artisanat_v7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1541016"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"// console.log(pm.response);",
+									"if (pm.response.code == 200) {",
+									"    pm.collectionVariables.set(\"TOKEN\", jsonData.accessToken);",
+									"    pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"sysadmin\",\n    \"password\":\"@sys@#123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin_web",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"Floturner\",\n    \"password\":\"Floturner47\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signin_web",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signin_web"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNjE5NTE3Mzk2LCJpYXQiOjE2MTk1MTczOTZ9.ndgkWrM42tYElgg4oJi_mivoPBLiauSXYzZsyA-MlzR6dYV2s6przXcYJ8F4Dk9YWMnxczMaAz86j5hI4PZYEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": \"7c58e4b6-8e20-414d-8bda-5651102b9e77\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/refreshtoken",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refreshtoken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin-up all",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"user9\",\n    \"password\":\"user9\",\n    \"email\":\"user9@gmail.cc\",\n    \"nom\":\"user9\",\n    \"prenom\":\"user9\",\n    \"sousCategories\":1,\n    \"telephone\":\"0000011\",\n    \"adresse\":\"Lome\",\n    \"numeroEnr\":\"00111\",\n    \"facebook\":\"facecaroto\",\n    \"whatsapp\":\"whatcaroto\",\n    \"tweeter\":\"tweetercaroto\",\n    \"longitude\":4.0,\n    \"latidute\":4.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signin-up-all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signin-up-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin-up all Check",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"1234\",\n    \"password\":\"123\",\n    \"email\":\"1234@gmail.cc\",\n    \"nom\":\"user9\",\n    \"prenom\":\"user9\",\n    \"sousCategories\":1,\n    \"telephone\":\"1234\",\n    \"adresse\":\"Lome\",\n    \"numeroEnr\":\"12\",\n    \"facebook\":\"1234\",\n    \"whatsapp\":\"1234\",\n    \"tweeter\":\"1234\",\n    \"longitude\":4.0,\n    \"latidute\":4.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signin-up-all-check",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signin-up-all-check"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all carousel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/carousels",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"carousels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualite by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/actualites_op_file_auth/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"actualites_op_file_auth",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all actualites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/actualites_not_deleted_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"actualites_not_deleted_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all actualites crm lome pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/actualites_lome_pages_auth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_lome_pages_auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 actualites crm lome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/actualites_lome_file_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_lome_file_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 actualites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/actualites_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"actualites_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all membres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/membres_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"membres_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all membres crm lome pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/membres_lome_auth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"membres_lome_auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search membre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/membre_search/Do",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"membre_search",
+								"Do"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categorie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/categorie_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"categorie_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sous categorie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/sous_categorie_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"sous_categorie_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "categorie page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/categorie_page_auth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"categorie_page_auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sous categorie by cat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/sous_categorie_by_cat_auth/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"sous_categorie_by_cat_auth",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cats with thiers subcats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/cat_sous_cat_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"cat_sous_cat_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 artisans auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_last_premium",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_last_premium"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one artisans auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_auth/7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_auth",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all artisans auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_not_deleted_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_not_deleted_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all artisans by sous cat auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_sous_cat_auth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_sous_cat_auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all artisans pages no pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_page_auth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_page_auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one artisan and realisation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/realisations_art_auth/2621",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"realisations_art_auth",
+								"2621"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get artisan by username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_username_auth/Floturner",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_username_auth",
+								"Floturner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search artisan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_search/Do",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_search",
+								"Do"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search artisans geolocalise",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_geo/1/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_geo",
+								"1",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all artisans pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_pages_auth/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_pages_auth",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all artisans by sous cat pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_sous_cat_pages_auth/139/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_sous_cat_pages_auth",
+								"139",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search artisan page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/artisans_search_page/1/dgggfgfgfg",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"artisans_search_page",
+								"1",
+								"dgggfgfgfg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realisations by Artisan ID pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/realisations_page_auth/2621/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"realisations_page_auth",
+								"2621",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get realistion by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/realisation_auth/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"realisation_auth",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check email save",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/check_email/sysadmin@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_email",
+								"sysadmin@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/check_username/sysadmin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_username",
+								"sysadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check telephone save",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/check_telephone/70895621",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_telephone",
+								"70895621"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check num enregistrement save",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/check_num_enr/MR788",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_num_enr",
+								"MR788"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check facebook save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"https://www.facebook.com/floturner\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/check_fac",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_fac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check whatsapp save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"91405521\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/check_whatsapp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_whatsapp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check tweeter save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"https://www.twitter.com/floturner\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/check_tweeter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"check_tweeter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/documents_auth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"documents_auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inscription projets",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"telephone\":\"60303101\",\n    \"nom\":\"etudiant1\",\n    \"prenom\":\"etudiant1\",\n    \"apport\":\"apport\",\n    \"niveauEtude\":\"niveau 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/inscription_projets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"inscription_projets"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "actualite",
+			"item": [
+				{
+					"name": "select one",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_optional/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_optional",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all not del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/actualites_page/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_page",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select by crm pages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_page/1/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_page",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search crm lome pages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/search_actualite/1/mat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_actualite",
+								"1",
+								"mat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "theme",
+									"value": "Récital",
+									"type": "text"
+								},
+								{
+									"key": "titre",
+									"value": "Récital du nouvel an",
+									"type": "text"
+								},
+								{
+									"key": "contenu",
+									"value": "Un récital est un concert donné en public ou de façon privée, le plus souvent par un ou deux musiciens. On parle également de récital dans la chanson et la poésie.",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"/C:/PROGS/Images/erik-mclean-yq6w7JG86FE-unsplash.jpg",
+										"/C:/PROGS/Images/jan-valecka-_BJPmga3vec-unsplash.jpg",
+										"/C:/PROGS/Images/jarritos-mexican-soda-3fUD9LNlCL4-unsplash.jpg"
+									]
+								},
+								{
+									"key": "lien",
+									"value": "https://www.youtube.com/watch?v=aP6xvCn9iJk",
+									"type": "text"
+								},
+								{
+									"key": "dateActualite",
+									"value": "2021-07-14",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_file",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "theme",
+									"value": "Artisanat",
+									"type": "text"
+								},
+								{
+									"key": "titre",
+									"value": "Artisanat",
+									"type": "text"
+								},
+								{
+									"key": "contenu",
+									"value": "Artisanat du Togo",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "lien",
+									"value": "https://www.youtube.com/watch?v=aP6xvCn9iJk",
+									"type": "text"
+								},
+								{
+									"key": "dateActualite",
+									"value": "2021-06-25",
+									"type": "text"
+								},
+								{
+									"key": "ids",
+									"value": "[{\"id\":83,\"action\":0}]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites_update_file/31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites_update_file",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update no file",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"theme\": \"Célébration\",\n    \"titre\": \"Célébration de la journée internationale\",\n    \"contenu\": \"Célébration de la journée internationale du Droit de la femme à la CRM Lomé ce Lundi 08 Mars 2021.\",\n    \"lien\": \"https://www.youtube.com/watch?v=aP6xvCn9iJk\",\n    \"dateActualite\": \"2021-06-25\",\n    \"ids\": [83,84]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/actualites/8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actualites",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "artisan",
+			"item": [
+				{
+					"name": "select one",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_optional/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_optional",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select artisan by user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select artisan by token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisan_token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisan_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisans_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisans_pages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all artisan by cat",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_sous_cat/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_sous_cat",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select artisan and realisation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisan_token_realisation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisan_token_realisation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all not del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all del user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_user/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_user",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search pages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_search_page/1/nu",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_search_page",
+								"1",
+								"nu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search by crm pages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_search_page/1/1/nu",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_search_page",
+								"1",
+								"1",
+								"nu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check telephone update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_telephone_up/1/90474756",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_telephone_up",
+								"1",
+								"90474756"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check telephone update auth",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjEyNjQyNTQ5LCJleHAiOjE2MTI2NTQ4OTJ9.yFpjBK9tWvzcZOzcuUdQxRfpbeli224626gkjfCqx6Km_V59kKntUq6nbV1F6TRAr7hObDRk9tnlSNLdttrwxw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://51.89.149.68:8080/artisanat_v7/api/check_telephone_up/90474756",
+							"protocol": "http",
+							"host": [
+								"51",
+								"89",
+								"149",
+								"68"
+							],
+							"port": "8080",
+							"path": [
+								"artisanat_v7",
+								"api",
+								"check_telephone_up",
+								"90474756"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check num enregistrement update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_num_enr_up/1/90474756",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_num_enr_up",
+								"1",
+								"90474756"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check num enregistrement update auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_num_enr_up/90474756",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_num_enr_up",
+								"90474756"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check facebook update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"https://facebook.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_fac_up/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_fac_up",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check facebook update auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"https://facebook.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_fac_up",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_fac_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check whatsapp update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"93160712\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_whatsapp_up/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_whatsapp_up",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check whatsapp update auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"93160712\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_whatsapp_up",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_whatsapp_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check tweeter update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"https://twitter.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_tweeter_up/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_tweeter_up",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check tweeter update auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\":\"https://twitter.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_tweeter_up",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_tweeter_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"yaoboy12\",\r\n    \"password\":\"Yaoboy1234\",\r\n    \"email\":\"yaoboy@gmail.cc\",\r\n    \"nom\":\"Boy\",\r\n    \"prenom\":\"Yao\",\r\n    \"sousCategories\":155,\r\n    \"telephone\":\"99885775\",\r\n    \"adresse\":\"Lome\",\r\n    \"numeroEnr\":\"AK875\",\r\n    \"facebook\": null,\r\n    \"whatsapp\": \"99885775\",\r\n    \"tweeter\": null,\r\n    \"longitude\": null,\r\n    \"latidute\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans-all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans-all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user artisan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"caroto\",\n    \"email\":\"caroto@gmail.cc\",\n    \"nom\":\"caroto\",\n    \"prenom\":\"caroto\",\n    \"sousCategories\":1,\n    \"telephone\":\"0000011\",\n    \"adresse\":\"Lome\",\n    \"numeroEnr\":\"00111\",\n    \"facebook\":\"facecaroto\",\n    \"whatsapp\":\"whatcaroto\",\n    \"tweeter\":\"tweetercaroto\",\n    \"longitude\":4.0,\n    \"latidute\":4.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user_artisant_update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user_artisant_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update artisan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"Alice27\",\n    \"email\":\"alice@gmail.cc\",\n    \"nom\":\"Darmo\",\n    \"prenom\":\"Alice\",\n    \"sousCategories\":155,\n    \"telephone\":\"98552233\",\n    \"adresse\":\"Totsi\",\n    \"numeroEnr\":\"AE898\",\n    \"facebook\":null,\n    \"whatsapp\":null,\n    \"tweeter\":null,\n    \"longitude\":null,\n    \"latidute\":null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user_artisant_update/2635",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user_artisant_update",
+								"2635"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable or disable one artisan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisans_active/2636",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_active",
+								"2636"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable multiple artisans",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idArtisan\":4\r\n    },\r\n    {\r\n        \"idArtisan\":5\r\n    },\r\n    {\r\n        \"idArtisan\":6\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_active",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disable multiple artisans",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idArtisan\":4\r\n    },\r\n    {\r\n        \"idArtisan\":5\r\n    },\r\n    {\r\n        \"idArtisan\":6\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans_desactive",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_desactive"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "etudiant",
+			"item": [
+				{
+					"name": "select one",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/etudiants/optional/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants",
+								"optional",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select etudiant by user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/etudiants/user/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select etudiant by token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisan_token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisan_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/artisans",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisans_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisans_pages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans_pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/etudiants/search/page/1/Yao",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants",
+								"search",
+								"page",
+								"1",
+								"Yao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all not del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/etudiants_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check telephone update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/etudiant/check_telephone_up/1/90474756",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiant",
+								"check_telephone_up",
+								"1",
+								"90474756"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check telephone update auth",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjEyNjQyNTQ5LCJleHAiOjE2MTI2NTQ4OTJ9.yFpjBK9tWvzcZOzcuUdQxRfpbeli224626gkjfCqx6Km_V59kKntUq6nbV1F6TRAr7hObDRk9tnlSNLdttrwxw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/etudiant/check_telephone_up/90474756",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiant",
+								"check_telephone_up",
+								"90474756"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"yaoboy12\",\r\n    \"password\":\"Yaoboy1234\",\r\n    \"email\":\"yaoboy@gmail.cc\",\r\n    \"nom\":\"Boy\",\r\n    \"prenom\":\"Yao\",\r\n    \"telephone\":\"99885775\",\r\n    \"adresse\":\"Lome\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/etudiants-all-check",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants-all-check"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user etudiant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"caroto\",\n    \"email\":\"caroto@gmail.cc\",\n    \"nom\":\"caroto\",\n    \"prenom\":\"caroto\",\n    \"sousCategories\":1,\n    \"telephone\":\"0000011\",\n    \"adresse\":\"Lome\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user_etudiant_update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user_etudiant_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update etudiant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"Alice27\",\n    \"email\":\"alice@gmail.cc\",\n    \"nom\":\"Darmo\",\n    \"prenom\":\"Alice\",\n    \"sousCategories\":155,\n    \"telephone\":\"98552233\",\n    \"adresse\":\"Totsi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user_etudiant_update/2635",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user_etudiant_update",
+								"2635"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable or disable one etudiant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/etudiants_active/2636",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants_active",
+								"2636"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable multiple etudiant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idEtudiant\":4\r\n    },\r\n    {\r\n        \"idEtudiant\":5\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/etudiants_active",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants_active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disable multiple etudiant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idEtudiant\":4\r\n    },\r\n    {\r\n        \"idEtudiant\":5\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/etudiants_desactive",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants_desactive"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add artisan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"etudiant\":1,\r\n    \"artisans\": [\r\n        {\r\n            \"artisans\":1,\r\n            \"abonnement\":true\r\n        },\r\n        {\r\n            \"artisans\":3,\r\n            \"abonnement\":true\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/add/artisan/etudiant",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"add",
+								"artisan",
+								"etudiant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "artisant by etudiant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/etudiants/artisan/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"etudiants",
+								"artisan",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "etudiant by artisan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/artisans/etudiant/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"artisans",
+								"etudiant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categorie",
+			"item": [
+				{
+					"name": "select one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categorie/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categorie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categorie",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categorie_pages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categorie_pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search_categorie/1/alim",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_categorie",
+								"1",
+								"alim"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check libelle save",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_libelle/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_libelle",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check libelle update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_libelle_up/1/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_libelle_up",
+								"1",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"libelle\":\"Cat 2\",\n    \"description\":\"desc cat 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categorie",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"libelle\":\"Cat 2\",\n    \"description\":\"desc cat 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categorie/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categorie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "document",
+			"item": [
+				{
+					"name": "select all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/documents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/documents_pages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"documents_pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search_documents/1/arrete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_documents",
+								"1",
+								"arrete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/documents_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"documents_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "titre",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "doc",
+									"type": "file",
+									"src": "/home/nutefe/Documents/formulairedenregistrement.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/documents_file",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"documents_file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "titre",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "doc",
+									"type": "file",
+									"src": "/home/nutefe/Documents/formulairedenregistrement.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/documents_file/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"documents_file",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update no file",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titre\":\"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/documents/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"documents",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carousel",
+			"item": [
+				{
+					"name": "select all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg2MTQzOTIyLCJleHAiOjE2ODYxNDc1MjJ9.1OAoxI4EkMRKSoE6hsamFgmqXkRTHLKirbxBitTQX0raHOTxXVpiMG5AsOmpDY1ud_kpUQXNdA22f4TF-WTC4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/carousels",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carousels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save file",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg2MTQzOTIyLCJleHAiOjE2ODYxNDc1MjJ9.1OAoxI4EkMRKSoE6hsamFgmqXkRTHLKirbxBitTQX0raHOTxXVpiMG5AsOmpDY1ud_kpUQXNdA22f4TF-WTC4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/s2a/Images/1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/carousel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carousel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg2MTQzOTIyLCJleHAiOjE2ODYxNDc1MjJ9.1OAoxI4EkMRKSoE6hsamFgmqXkRTHLKirbxBitTQX0raHOTxXVpiMG5AsOmpDY1ud_kpUQXNdA22f4TF-WTC4g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/nutefe/Documents/formulairedenregistrement.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/carousel/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carousel",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inscription projet",
+			"item": [
+				{
+					"name": "select one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inscription_projets_optional/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets_optional",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inscription_projets_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inscription_projets_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all by cat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inscription_projets_by_cat/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets_by_cat",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/inscription_projets_pages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets_pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search_inscription_projets/1/ssdsdsd",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_inscription_projets",
+								"1",
+								"ssdsdsd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"telephone\":\"60303101\",\n    \"nom\":\"etudiant1\",\n    \"prenom\":\"etudiant1\",\n    \"apport\":\"apport\",\n    \"niveauEtude\":\"niveau 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/inscription_projets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"telephone\":\"60303101\",\n    \"nom\":\"etudiant1\",\n    \"prenom\":\"etudiant1\",\n    \"apport\":\"apport\",\n    \"niveauEtude\":\"niveau 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/inscription_projets/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"inscription_projets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "membre",
+			"item": [
+				{
+					"name": "select one",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres_optional/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres_optional",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all not del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/membres_page/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres_page",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select by crm pages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres_page/1/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres_page",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search_membre/1/juriste",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_membre",
+								"1",
+								"juriste"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "poste",
+									"value": "Poste",
+									"type": "text"
+								},
+								{
+									"key": "nom",
+									"value": "Nom",
+									"type": "text"
+								},
+								{
+									"key": "prenom",
+									"value": "prenom",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/PROGS/Images/1975193.png"
+								},
+								{
+									"key": "actif",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idCrm",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/membre_file",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membre_file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update file",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "poste",
+									"value": "Poste",
+									"type": "text"
+								},
+								{
+									"key": "nom",
+									"value": "Nom",
+									"type": "text"
+								},
+								{
+									"key": "prenom",
+									"value": "prenom",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/home/nutefe/Images/l6.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/membre_file/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membre_file",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update no file",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"poste\":\"Juriste\",\r\n    \"nom\":\"Bellucini\",\r\n    \"prenom\":\"Marina\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/membres/7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membres",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable or disable one membre",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/membre_actif/124",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"membre_actif",
+								"124"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "realisation",
+			"item": [
+				{
+					"name": "select one",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations_optional/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_optional",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all not del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all del",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all by artisan",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sousCategories\":3,\n    \"username\":\"Caisse\",\n    \"email\":\"caisse@gmail.cc\",\n    \"password\":\"caisse\",\n    \"nom\":\"caisse\",\n    \"prenom\":\"caisse\",\n    \"telephone\":\"00000000\",\n    \"adresse\":\"caisse\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations_art/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_art",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by auth user pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/realisations_user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "libelle",
+									"value": "My realisation",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "My realisation",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"meq6ec3Cj/damir-babacic-X3Fcm6Gcovc-unsplash.jpg",
+										"meq6ec3Cj/erik-mclean-yq6w7JG86FE-unsplash.jpg",
+										"meq6ec3Cj/jan-valecka-_BJPmga3vec-unsplash.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations_file",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "libelle",
+									"value": "repa",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "desc",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": [
+										"/home/nutefe/4.jpeg",
+										"/home/nutefe/4.png",
+										"/home/nutefe/5.jpeg",
+										"/home/nutefe/5.png"
+									]
+								},
+								{
+									"key": "ids",
+									"value": "[{\"id\":50,\"action\":1}, {\"id\":51,\"action\":1},{\"id\":52,\"action\":1},{\"id\":57,\"action\":0}]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations_update/19",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations_update",
+								"19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update no file",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"libelle\":\"test2\",\n    \"description\":\"test\",\n    \"ids\": [83,84]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/realisations/19",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"realisations",
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sous categorie",
+			"item": [
+				{
+					"name": "select one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categorie/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categorie",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categories_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categories_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all cat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categorie_by_cat/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie_by_cat",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all cat del false",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categorie_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all cat del true",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categorie_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sous_categorie_pages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie_pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search_sous_categorie/1/electricien",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_sous_categorie",
+								"1",
+								"electricien"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check libelle save",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_libelle_s/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_libelle_s",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check libelle update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_libelle_up_s/1/info",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_libelle_up_s",
+								"1",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categories\":1,\n    \"libelle\":\"Sous Cat 2-1\",\n    \"description\":\"desc sous cat 2-1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/sous_categorie",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categories\":1,\n    \"libelle\":\"Sous Cat 2-1\",\n    \"description\":\"desc sous cat 2-1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/sous_categorie/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sous_categorie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me_web",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/me_web",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me_web"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_optional/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_optional",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all admins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all agents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_agent",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_agent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count all agents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user_agent_count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user_agent_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all agents pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_agent_page/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_agent_page",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search agents pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/search_user_agent/1/a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"search_user_agent",
+								"1",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all artisans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_artisan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_artisan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all not del",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_not_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_not_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select all del",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users_deleted",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_deleted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check mail update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_email_up/1/marcia04@hotmail.fr",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_email_up",
+								"1",
+								"marcia04@hotmail.fr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check mail update auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_email_up/martin@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_email_up",
+								"martin@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check username update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_username_up/1/sysadmin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_username_up",
+								"1",
+								"sysadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check username update auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/check_username_up/sysadmin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_username_up",
+								"sysadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ancien\":\"@sys@#12\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/check_password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"check_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"Agent1\",\n    \"email\":\"Agent1@gmail.cc\",\n    \"password\":\"1234\",\n    \"nom\":\"Agent1\",\n    \"prenom\":\"Agent1\",\n    \"role\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"Agent1\",\n    \"email\":\"Agent1@gmail.cc\",\n    \"nom\":\"Agent1\",\n    \"prenom\":\"Agent1\",\n    \"role\":3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/2621",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"2621"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update auth",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"Agent1\",\n    \"email\":\"Agent1@gmail.cc\",\n    \"nom\":\"Agent1\",\n    \"prenom\":\"Agent1\",\n    \"role\":3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users_current",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users_current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update passe",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nouveau\":\"user9\",\n    \"ancien\":\"user1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/update_pass_web",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"update_pass_web"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "avatar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/nutefe/Téléchargements/artisans/7.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/avatar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://51.75.162.85:8080/artisanat_v8/api"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:8787/api",
+			"disabled": true
+		},
+		{
+			"key": "TOKEN",
+			"value": ""
+		},
+		{
+			"key": "refreshToken",
+			"value": ""
+		}
+	]
+}

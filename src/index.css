@@ -77,6 +77,43 @@
   body {
     scroll-behavior: auto;
   }
+
+  /* Animation delays pour le carousel */
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  /* Scrollbar visible pour les spécialités */
+  .scrollbar-visible {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+
+  .scrollbar-visible::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .scrollbar-visible::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .scrollbar-visible::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .scrollbar-visible::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 

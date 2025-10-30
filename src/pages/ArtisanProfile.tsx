@@ -21,28 +21,28 @@ const ArtisanProfile: React.FC = () => {
     location: 'Lomé, Togo',
     about: 'Marc AGBO est un artisan calligraphes avec un CRM vérifié.\n\nBasé à, notre artisan met son expertise au service de vos projets avec professionnalisme et savoir-faire.',
     gallery: [
-      { id: 1, url: '/slide1.jpg', thumbnail: '/slide1.jpg' },
-      { id: 2, url: '/slide2.jpg', thumbnail: '/slide2.jpg' },
-      { id: 3, url: '/slide3.jpg', thumbnail: '/slide3.jpg' }
+      { id: 1, url: '/assets/images/textile1.jpg', thumbnail: '/assets/images/textile1.jpg' },
+      { id: 2, url: '/assets/images/metier-bouche.jpg', thumbnail: '/assets/images/metier-bouche.jpg' },
+      { id: 3, url: '/assets/images/hero-image.jpg', thumbnail: '/assets/images/hero-image.jpg' }
     ],
     projects: [
       {
         id: 1,
-        title: 'test3',
-        description: 'description de test3',
-        images: ['/slide1.jpg']
+        title: 'Création textile traditionnelle',
+        description: 'Réalisation de pièces uniques en textile traditionnel avec des motifs authentiques',
+        images: ['/assets/images/textile1.jpg']
       },
       {
         id: 2,
-        title: 'test2',
-        description: 'description for test2',
-        images: ['/slide2.jpg']
+        title: 'Art culinaire local',
+        description: 'Préparation de spécialités locales avec des techniques ancestrales',
+        images: ['/assets/images/metier-bouche.jpg']
       },
       {
         id: 3,
-        title: 'test',
-        description: 'test description',
-        images: ['/slide3.jpg', '/textile1.jpg', '/metier-bouche.jpg']
+        title: 'Projets variés',
+        description: 'Diverses réalisations mettant en valeur le savoir-faire artisanal',
+        images: ['/assets/images/hero-image.jpg', '/assets/images/accueil.png']
       }
     ]
   }
@@ -67,7 +67,7 @@ const ArtisanProfile: React.FC = () => {
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
               <img 
-                src="/logo-crm.png" 
+                src="/favicon.png" 
                 alt="Logo ALONU" 
                 className="h-10 w-auto"
               />
@@ -196,9 +196,9 @@ const ArtisanProfile: React.FC = () => {
                 </h2>
                 <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
                   <img 
-                    src="/placeholder.svg" 
-                    alt="Map" 
-                    className="w-full h-full object-cover"
+                    src="/assets/images/profile.png" 
+                    alt="Localisation artisan" 
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>

@@ -11,6 +11,17 @@ interface ArtisanCardProps {
 
 const ArtisanCard = ({ artisan }: ArtisanCardProps) => {
   const navigate = useNavigate();
+  
+  // Générer les initiales de manière sécurisée
+  const getInitials = (name: string) => {
+    if (!name) return '?';
+    return name.split(' ')
+      .filter(n => n.length > 0)
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
 
   return (
     <Card className="overflow-hidden hover:shadow-hover transition-all duration-300 animate-fade-in gradient-card border-0">
@@ -18,7 +29,7 @@ const ArtisanCard = ({ artisan }: ArtisanCardProps) => {
         <div className="flex items-start gap-3 mb-3">
           <div className="relative">
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-lg">
-              {artisan.name.split(' ').map(n => n[0]).join('')}
+              {getInitials(artisan.name)}
             </div>
             {artisan.verified && (
               <CheckCircle2 className="absolute -bottom-1 -right-1 w-5 h-5 text-accent bg-background rounded-full" />

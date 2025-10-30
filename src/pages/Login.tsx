@@ -9,10 +9,9 @@ import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
-import { useAuth as useAuthContext } from '@/contexts/AuthContext';
-import { useLogin } from '@/hooks';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Eye, EyeOff, LogIn, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Loader2, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
 
 // Schéma de validation
 const loginSchema = z.object({
@@ -27,8 +26,7 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const { login: authLogin } = useAuthContext();
-  const { mutateAsync: signin } = useLogin();
+  const { login, isLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const from = (location.state as { from?: string })?.from || '/';
@@ -48,18 +46,15 @@ export default function Login() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await signin({
+      await login({
         username: data.username,
         password: data.password
       });
 
-      // Sauvegarder le token dans le contexte
-      authLogin(response.accessToken, response.refreshToken);
-
       // Vérifier le rôle de l'utilisateur pour rediriger vers la bonne page
-      const userRole = response.user?.role;
+      const userRole = data.username; // Pour l'instant, on utilise le username pour déterminer le type
       
-      if (userRole === 1) {
+      if (userRole === 'admin' || userRole === 'sysadmin') {
         // Admin - Rediriger vers le dashboard admin
         toast({
           title: 'Connexion réussie',
@@ -102,7 +97,7 @@ export default function Login() {
         <div className="text-center space-y-3">
           <div className="flex justify-center items-center space-x-3">
             <img 
-              src="/logo-crm.png" 
+              src="/favicon.png" 
               alt="Logo CRM" 
               className="h-12 w-auto"
             />
@@ -193,9 +188,9 @@ export default function Login() {
             <Button
               type="submit"
               className="w-full"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
             >
-              {isSubmitting ? (
+              {(isSubmitting || isLoading) ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   Connexion en cours...
@@ -222,18 +217,20 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Lien inscription */}
-        <Card className="p-6 text-center">
-          <p className="text-muted-foreground mb-4">
-            Vous n'avez pas encore de compte artisan ?
-          </p>
-          <Button
-            variant="outline"
-            onClick={() => navigate('/register')}
-            className="w-full"
-          >
-            Créer un compte artisan
-          </Button>
+        {/* Liens inscription */}
+        <Card className="p-6 text-center space-y-3">
+          <div>
+            <p className="text-muted-foreground mb-2">Vous n'avez pas encore de compte artisan ?</p>
+            <Button variant="outline" onClick={() => navigate('/register/artisan')} className="w-full">
+              Créer un compte artisan
+            </Button>
+          </div>
+          <div>
+            <p className="text-muted-foreground mb-2">Vous êtes étudiant ?</p>
+            <Button variant="outline" onClick={() => navigate('/register/etudiant')} className="w-full">
+              Créer un compte étudiant
+            </Button>
+          </div>
         </Card>
 
         {/* Footer */}

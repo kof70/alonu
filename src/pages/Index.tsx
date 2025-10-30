@@ -1,74 +1,90 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import Footer from '@/components/layout/Footer'
+import { useFeaturedArtisans } from '@/hooks/use-artisans'
+
+interface Slide {
+  id: number
+  image: string
+  title: string
+  subtitle: string
+  cta1: string
+  cta2: string
+  link1: string
+  link2: string
+}
 
 const Index: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   
-  const slides = [
+  // Hooks pour récupérer les données de l'API
+  const { artisans: featuredArtisans, loading: artisansLoading } = useFeaturedArtisans(8)
+  
+  const slides: Slide[] = [
     {
       id: 1,
-      image: '/hero-image.jpg',
-      title: 'Rejoignez notre communauté d\'artisans',
-      subtitle: 'Découvrez des artisans passionnés et vérifiés près de chez vous. Étudiants, développez vos compétences avec nos experts !',
-      cta1: 'Trouver un Artisan',
-      cta2: 'Développer mes Talents'
-    }
-  ]
-
-  const categories = [
-    {
-      id: 1,
-      name: 'Métiers d\'art',
-      description: 'Découvrez l\'excellence des artisans créatifs et traditionnels',
-      type: 'card',
-      buttonText: 'Parcourir'
+      image: '/assets/images/slide1.jpg',
+      title: 'Artisans, Développez Votre Activité',
+      subtitle: 'Rejoignez notre plateforme et gagnez en visibilité. Faites-vous connaître auprès de milliers de clients potentiels et développez votre réseau professionnel.',
+      cta1: 'Inscription Artisan',
+      cta2: 'En Savoir Plus',
+      link1: '/register-artisan',
+      link2: '/categories-artisans'
     },
     {
       id: 2,
-      name: 'Métiers de bouche',
-      description: 'Découvrez les talents culinaires locaux',
-      badge: 'Populaire',
-      badgeColor: 'bg-green-500',
-      image: '/metier-bouche.jpg',
-      type: 'image-card',
-      buttonText: 'Consulter'
+      image: '/assets/images/slide2.jpg',
+      title: 'Programme 1 Étudiant, 1 Artisan',
+      subtitle: 'Apprenez un métier traditionnel auprès de nos maîtres artisans. Développez vos compétences pratiques tout en poursuivant vos études.',
+      cta1: 'Inscription Étudiant',
+      cta2: 'Voir les Artisans',
+      link1: '/register-student',
+      link2: '/categories-artisans'
     },
     {
       id: 3,
-      name: 'Textile et habillement',
-      description: 'Découvrez les créateurs de mode et de vêtements uniques.',
-      badge: 'Nouveau',
-      badgeColor: 'bg-blue-600',
-      image: '/textile1.jpg',
-      type: 'image-card',
-      buttonText: 'Voir'
-    },
-    {
-      id: 4,
-      name: 'Métiers du bâtiment',
-      description: 'Maçonnerie, plomberie et travaux',
-      type: 'card',
-      buttonText: 'Explorer'
-    },
-    {
-      id: 5,
-      name: 'Métiers du bois',
-      description: 'Menuiserie et ébénisterie traditionnelle',
-      type: 'card',
-      buttonText: 'Découvrir'
-    },
-    {
-      id: 6,
-      name: 'Artisanat du cuir',
-      description: 'Maroquinerie et accessoires de qualité',
-      type: 'card',
-      buttonText: 'Explorer'
+      image: '/assets/images/slide3.jpg',
+      title: 'Trouvez l\'Artisan Idéal Près de Chez Vous',
+      subtitle: 'Découvrez des artisans qualifiés et vérifiés par notre communauté. Des professionnels passionnés pour tous vos projets.',
+      cta1: 'Parcourir les Catégories',
+      cta2: 'Voir Tous les Artisans',
+      link1: '/categories-artisans',
+      link2: '/categories-artisans'
     }
   ]
 
-  const experts = [
+  // Rotation automatique du carousel avec réinitialisation sur interaction manuelle
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000) // Change toutes les 5 secondes
+
+    return () => clearInterval(interval)
+  }, [slides.length, currentSlide]) // Ajouter currentSlide pour réinitialiser le timer
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
+
+  // (Supprimé: variable 'categories' non utilisée)
+
+  // Utiliser les artisans de l'API ou les artisans par défaut
+  const experts = featuredArtisans.length > 0 ? featuredArtisans.map((artisan, index) => ({
+    id: parseInt(artisan.id),
+    name: artisan.name,
+    profession: artisan.profession,
+    ...(index === 0 && { badge: 'Populaire', badgeColor: 'bg-green-500' }),
+    ...(index === 1 && { badge: 'Nouveau', badgeColor: 'bg-blue-500' })
+  })) : [
     {
       id: 1,
       name: 'Iete AGBOGAN',
@@ -123,7 +139,7 @@ const Index: React.FC = () => {
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
               <img 
-                src="/logo-crm.png" 
+                src="/favicon.png" 
                 alt="Logo ALONU" 
                 className="h-10 w-auto"
               />
@@ -144,18 +160,22 @@ const Index: React.FC = () => {
             </nav>
 
             <div className="flex items-center space-x-3">
+              <Link to="/login" className="inline-flex">
               <Button variant="outline" className="border-2 border-primary text-primary hover:bg-primary/10 hover:text-primary flex items-center">
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                 </svg>
                 Connexion
               </Button>
+              </Link>
+              <Link to="/register/artisan" className="inline-flex">
               <Button className="bg-primary hover:bg-primary/90 flex items-center">
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                 </svg>
                 S'inscrire
               </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -163,40 +183,98 @@ const Index: React.FC = () => {
 
       {/* Hero Carousel Section */}
       <section className="relative h-[500px] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={slides[currentSlide].image}
-            alt={slides[currentSlide].title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-        </div>
+        {/* Images avec transitions */}
+        {slides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+              index === currentSlide
+                ? 'opacity-100 translate-x-0'
+                : index < currentSlide
+                ? 'opacity-0 -translate-x-full'
+                : 'opacity-0 translate-x-full'
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+          </div>
+        ))}
         
+        {/* Contenu avec animations */}
         <div className="relative z-10 h-full flex items-center">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl text-white">
-              <h1 className="text-5xl font-bold mb-6 leading-tight">
+              <h1 
+                key={`title-${currentSlide}`}
+                className="text-5xl font-bold mb-6 leading-tight animate-fade-in-up"
+              >
                 {slides[currentSlide].title}
               </h1>
-              <p className="text-lg mb-8 opacity-90">
+              <p 
+                key={`subtitle-${currentSlide}`}
+                className="text-lg mb-8 opacity-90 animate-fade-in-up animation-delay-200"
+              >
                 {slides[currentSlide].subtitle}
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8">
-                  {slides[currentSlide].cta1}
-                </Button>
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8">
-                  {slides[currentSlide].cta2}
-                </Button>
+              <div 
+                key={`buttons-${currentSlide}`}
+                className="flex flex-wrap gap-4 animate-fade-in-up animation-delay-400"
+              >
+                <Link to={slides[currentSlide].link1} className="inline-flex">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 font-semibold shadow-lg">
+                    {slides[currentSlide].cta1}
+                  </Button>
+                </Link>
+                <Link to={slides[currentSlide].link2} className="inline-flex">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 px-8 font-semibold shadow-lg backdrop-blur-sm transition-all duration-300"
+                  >
+                    {slides[currentSlide].cta2}
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Boutons de navigation */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 transition-all backdrop-blur-sm"
+          aria-label="Slide précédent"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 transition-all backdrop-blur-sm"
+          aria-label="Slide suivant"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
         {/* Carousel Indicators */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
-          <div className="w-10 h-1 bg-white rounded-full" />
-          <div className="w-10 h-1 bg-white/40 rounded-full" />
+          {slides.map((slide, index) => (
+            <button
+              key={slide.id}
+              onClick={() => goToSlide(index)}
+              className={`w-10 h-1 rounded-full transition-all cursor-pointer ${
+                index === currentSlide ? 'bg-white' : 'bg-white/40 hover:bg-white/60'
+              }`}
+              aria-label={`Aller au slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
@@ -231,7 +309,7 @@ const Index: React.FC = () => {
               {/* Image - alignée avec la grille des métiers */}
               <div className="mt-7">
                 <img 
-                  src="/hero-image.jpg" 
+                  src="/assets/images/image trouver l artisan parfait.jpg" 
                   alt="Artisan au travail" 
                   className="w-full h-auto max-h-[1000px] object-cover rounded-lg shadow-sm"
                 />
@@ -264,20 +342,19 @@ const Index: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Textile et habillement - Image card with badge */}
-                  <div className="bg-white rounded-lg shadow-sm relative">
-                    <span className="bg-blue-600 hover:bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold absolute -top-2 -left-2 z-10 transition-colors cursor-pointer">
-                      Nouveau
-                    </span>
-                    <img alt="Textile et habillement" src="/textile1.jpg" className="w-full h-36 object-cover rounded-t-lg" />
-                    <div className="p-4">
-                      <h3 className="text-base font-bold text-gray-900 mb-2">Textile et habillement</h3>
-                      <p className="text-sm text-gray-600 mb-3">Découvrez les créateurs de mode et de vêtements uniques.</p>
-                      <div className="flex justify-end">
-                        <Button className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-1 rounded-lg text-sm">
-                          Voir
-                        </Button>
-                      </div>
+                  {/* Textile et habillement - Simple card */}
+                  <div className="bg-white rounded-lg shadow-sm p-5">
+                    <div className="mb-3">
+                      <svg className="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                      </svg>
+                    </div>
+                    <h3 className="text-base font-bold text-gray-900 mb-2">Textile et habillement</h3>
+                    <p className="text-sm text-gray-600 mb-4">Découvrez les créateurs de mode et de vêtements uniques</p>
+                    <div className="flex justify-end">
+                      <Button className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-1 rounded-lg text-sm">
+                        Parcourir
+                      </Button>
                     </div>
                   </div>
 
@@ -305,10 +382,10 @@ const Index: React.FC = () => {
                 <div className="space-y-4">
                   {/* Métiers de bouche - Image card with badge */}
                   <div className="bg-white rounded-lg shadow-sm relative">
-                    <span className="bg-green-500 hover:bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold absolute -top-2 -left-2 z-10 transition-colors cursor-pointer">
+                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold absolute -top-2 -left-2 z-10">
                       Populaire
                     </span>
-                    <img alt="Métiers de bouche" src="/metier-bouche.jpg" className="w-full h-36 object-cover rounded-t-lg" />
+                    <img alt="Métiers de bouche" src="/assets/images/metier-bouche.jpg" className="w-full h-36 object-cover rounded-t-lg" />
                     <div className="p-4">
                       <h3 className="text-base font-bold text-gray-900 mb-2">Métiers de bouche</h3>
                       <p className="text-sm text-gray-600 mb-3">Découvrez les talents culinaires locaux</p>
@@ -385,7 +462,7 @@ const Index: React.FC = () => {
       </section>
 
 
-      {/* Nos experts Section */}
+          {/* Nos experts Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
@@ -393,32 +470,39 @@ const Index: React.FC = () => {
             <p className="text-gray-600">Découvrez les talents près de chez vous</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {experts.map((expert) => (
-              <div key={expert.id} className="rounded-lg border border-gray-200 p-5 relative hover:shadow-lg transition-shadow">
-                {expert.badge && (
-                  <span className={`${expert.badgeColor} hover:bg-orange-500 text-white text-xs px-3 py-1 rounded-full absolute -top-1 -left-1 z-10 transition-colors cursor-pointer`}>
-                    {expert.badge}
-                  </span>
-                )}
-                <div className="flex items-center mb-4 mt-5">
-                  <div className="w-11 h-11 bg-gray-300 rounded-full mr-3"></div>
-                  <div>
-                    <p className="font-bold text-gray-900">{expert.name}</p>
-                    <p className="text-sm text-gray-600">{expert.profession}</p>
+          {artisansLoading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+              <span className="ml-3 text-gray-600">Chargement des artisans...</span>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {experts.map((expert) => (
+                <div key={expert.id} className="rounded-lg border border-gray-200 p-5 relative hover:shadow-lg transition-shadow">
+                  {expert.badge && (
+                    <span className={`${expert.badgeColor} text-white text-xs px-3 py-1 rounded-full absolute -top-1 -left-1 z-10`}>
+                      {expert.badge}
+                    </span>
+                  )}
+                  <div className="flex items-center mb-4 mt-5">
+                    <div className="w-11 h-11 bg-gray-300 rounded-full mr-3"></div>
+                    <div>
+                      <p className="font-bold text-gray-900">{expert.name}</p>
+                      <p className="text-sm text-gray-600">{expert.profession}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <Link to={`/artisan/${expert.id}`} className="text-orange-500 font-medium flex items-center hover:text-orange-600">
+                      Voir le profil
+                      <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
-                <div className="flex justify-end">
-                  <a href="#" className="text-orange-500 font-medium flex items-center hover:text-orange-600">
-                    Voir le profil
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

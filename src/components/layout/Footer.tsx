@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
           <div className="text-center md:text-left max-w-md">
             <Link to="/" className="inline-flex items-center space-x-3 mb-4">
               <img 
-                src="/logo-crm.png" 
+                src="/favicon.png" 
                 alt="Logo CRM" 
                 className="h-10 w-auto"
               />
