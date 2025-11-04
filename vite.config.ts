@@ -4,7 +4,12 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      // Désactiver le HMR en production pour éviter les connexions au serveur dev
+      exclude: /node_modules/,
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
