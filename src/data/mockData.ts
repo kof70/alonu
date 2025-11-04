@@ -7,6 +7,7 @@ export interface Category {
 
 export interface Artisan {
   id: string;
+  originalIdArtisan?: number; // ID original de l'API pour les liens
   name: string;
   profession: string;
   category: string;

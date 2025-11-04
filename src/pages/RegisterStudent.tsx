@@ -61,7 +61,7 @@ export default function RegisterStudent() {
       // Rester compatible API: injecter une sous-catégorie par défaut côté payload
       await doRegister({ ...data, sousCategories: 1 })
       toast({ title: 'Inscription réussie', description: 'Bienvenue sur ALONU !' })
-      navigate('/dashboard', { replace: true })
+      navigate('/', { replace: true })
     } catch (e) {
       toast({ title: "Erreur d'inscription", description: e instanceof Error ? e.message : 'Une erreur est survenue', variant: 'destructive' })
     }
@@ -151,12 +151,12 @@ export default function RegisterStudent() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="latitude">Latitude (optionnel)</Label>
-                <Input id="latitude" type="number" step="any" />
+                <Input id="latitude" type="number" step="any" {...register('latitude', { valueAsNumber: true })} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="longitude">Longitude (optionnel)</Label>
                 <div className="flex gap-2">
-                  <Input id="longitude" type="number" step="any" />
+                  <Input id="longitude" type="number" step="any" {...register('longitude', { valueAsNumber: true })} />
                   <Button type="button" variant="outline" onClick={handleGeolocate} title="Utiliser ma position">
                     <MapPin className="h-4 w-4" />
                   </Button>

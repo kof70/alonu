@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import Footer from '@/components/layout/Footer'
 import { useFeaturedArtisans } from '@/hooks/use-artisans'
@@ -17,6 +17,8 @@ interface Slide {
 
 const Index: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [homeSearch, setHomeSearch] = useState('')
+  const navigate = useNavigate()
   
   // Hooks pour récupérer les données de l'API
   const { artisans: featuredArtisans, loading: artisansLoading } = useFeaturedArtisans(8)
@@ -39,7 +41,7 @@ const Index: React.FC = () => {
       subtitle: 'Apprenez un métier traditionnel auprès de nos maîtres artisans. Développez vos compétences pratiques tout en poursuivant vos études.',
       cta1: 'Inscription Étudiant',
       cta2: 'Voir les Artisans',
-      link1: '/register-student',
+      link1: '/register/etudiant',
       link2: '/categories-artisans'
     },
     {
@@ -78,13 +80,18 @@ const Index: React.FC = () => {
   // (Supprimé: variable 'categories' non utilisée)
 
   // Utiliser les artisans de l'API ou les artisans par défaut
-  const experts = featuredArtisans.length > 0 ? featuredArtisans.map((artisan, index) => ({
-    id: parseInt(artisan.id),
-    name: artisan.name,
-    profession: artisan.profession,
-    ...(index === 0 && { badge: 'Populaire', badgeColor: 'bg-green-500' }),
-    ...(index === 1 && { badge: 'Nouveau', badgeColor: 'bg-blue-500' })
-  })) : [
+  const experts = featuredArtisans.length > 0 ? featuredArtisans.map((artisan, index) => {
+    // Utiliser l'ID original (idArtisan) si disponible, sinon parser l'ID string
+    const artisanId = artisan.originalIdArtisan || parseInt(artisan.id) || 0
+    console.log('🔗 Lien artisan créé:', { artisanId, originalId: artisan.originalIdArtisan, mappedId: artisan.id, artisanName: artisan.name })
+    return {
+      id: artisanId,
+      name: artisan.name,
+      profession: artisan.profession,
+      ...(index === 0 && { badge: 'Populaire', badgeColor: 'bg-green-500' }),
+      ...(index === 1 && { badge: 'Nouveau', badgeColor: 'bg-blue-500' })
+    }
+  }) : [
     {
       id: 1,
       name: 'Iete AGBOGAN',
@@ -182,7 +189,7 @@ const Index: React.FC = () => {
       </header>
 
       {/* Hero Carousel Section */}
-      <section className="relative h-[500px] overflow-hidden">
+      <section className="relative h-[600px] lg:h-[610px] overflow-hidden">
         {/* Images avec transitions */}
         {slides.map((slide, index) => (
           <div
@@ -291,12 +298,25 @@ const Index: React.FC = () => {
               <div className="mb-4 relative">
                 <input 
                   type="text" 
-                  placeholder="Rechercher" 
-                  className="border border-gray-300 w-full px-4 py-3 pl-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  placeholder="Rechercher"
+                  value={homeSearch}
+                  onChange={(e) => setHomeSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && homeSearch.trim()) {
+                      navigate(`/categories?q=${encodeURIComponent(homeSearch.trim())}`)
+                    }
+                  }}
+                  className="border border-gray-300 w-full pr-32 px-4 py-3 pl-10 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 />
-                <svg className="w-5 h-5 text-gray-400 absolute left-3 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
+                <Button
+                  onClick={() => homeSearch.trim() && navigate(`/categories?q=${encodeURIComponent(homeSearch.trim())}`)}
+                  className="absolute top-1/2 -translate-y-1/2 right-2 bg-orange-600 hover:bg-orange-700 text-white px-5"
+                >
+                  Rechercher
+                </Button>
               </div>
               
               <a href="#" className="text-orange-500 font-medium flex items-center hover:text-orange-600">
@@ -309,7 +329,7 @@ const Index: React.FC = () => {
               {/* Image - alignée avec la grille des métiers */}
               <div className="mt-7">
                 <img 
-                  src="/assets/images/image trouver l artisan parfait.jpg" 
+                  src="/assets/images/image trouver l artisan parfait.jpg"
                   alt="Artisan au travail" 
                   className="w-full h-auto max-h-[1000px] object-cover rounded-lg shadow-sm"
                 />
@@ -342,19 +362,17 @@ const Index: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Textile et habillement - Simple card */}
-                  <div className="bg-white rounded-lg shadow-sm p-5">
-                    <div className="mb-3">
-                      <svg className="w-7 h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                      </svg>
-                    </div>
-                    <h3 className="text-base font-bold text-gray-900 mb-2">Textile et habillement</h3>
-                    <p className="text-sm text-gray-600 mb-4">Découvrez les créateurs de mode et de vêtements uniques</p>
-                    <div className="flex justify-end">
-                      <Button className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-1 rounded-lg text-sm">
-                        Parcourir
-                      </Button>
+                  {/* Textile et habillement - Image card */}
+                  <div className="bg-white rounded-lg shadow-sm">
+                    <img alt="Textile et habillement" src="/assets/images/textile1.jpg" className="w-full h-36 object-cover rounded-t-lg" />
+                    <div className="p-5">
+                      <h3 className="text-base font-bold text-gray-900 mb-2">Textile et habillement</h3>
+                      <p className="text-sm text-gray-600 mb-4">Découvrez les créateurs de mode et de vêtements uniques</p>
+                      <div className="flex justify-end">
+                        <Button className="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-3 py-1 rounded-lg text-sm">
+                          Parcourir
+                        </Button>
+                      </div>
                     </div>
                   </div>
 
@@ -449,9 +467,11 @@ const Index: React.FC = () => {
                     Apprenez un métier traditionnel tout en poursuivant vos études selon vos disponibilités
                   </p>
                   <div className="flex justify-end">
-                    <button className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-sm">
-                      S'inscrire
-                    </button>
+                    <Link to="/register/etudiant" className="inline-flex">
+                      <Button className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-sm">
+                        S'inscrire
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>

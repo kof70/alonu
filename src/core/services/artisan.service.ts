@@ -16,6 +16,13 @@ export interface ArtisanResponse {
     image?: string;
     deleted: boolean;
   };
+  users?: {
+    idUser?: number;
+    username?: string;
+    email?: string;
+    nom?: string;
+    prenom?: string;
+  };
   nom: string;
   prenom: string;
   sexe: string;
@@ -59,7 +66,7 @@ export class ArtisanService {
       // Mettre en cache
       this.artisansCache = artisans;
       this.cacheTimestamp = now;
-      
+
       console.log(`✅ ${artisans.length} artisans chargés et mis en cache`);
       return artisans;
     } catch (error) {
@@ -114,11 +121,11 @@ export class ArtisanService {
   async searchArtisans(query: string): Promise<ArtisanResponse[]> {
     try {
       if (!query || query.trim().length < 2) {
-        return [];
-      }
+      return [];
+    }
 
       console.log(`🔍 Recherche artisans: "${query}"`);
-      const allArtisans = await this.getAllArtisans();
+      let allArtisans = await this.getAllArtisans();
       
       const normalizeText = (text: string) => {
         if (!text) return '';
@@ -130,22 +137,78 @@ export class ArtisanService {
       };
 
       const searchTerm = normalizeText(query);
+      const tokens = searchTerm.split(/\s+/).filter(Boolean);
       
-      const results = allArtisans.filter(artisan => {
+      const filterFn = (artisan: ArtisanResponse) => {
         const nom = normalizeText(artisan.nom || '');
         const prenom = normalizeText(artisan.prenom || '');
+        const fullName = `${prenom} ${nom}`.trim();
+        const userNom = normalizeText(artisan.users?.nom || '');
+        const userPrenom = normalizeText(artisan.users?.prenom || '');
+        const userFullName = `${userPrenom} ${userNom}`.trim();
         const profession = normalizeText(artisan.profession || '');
         const adresse = normalizeText(artisan.adresse || '');
+        const email = normalizeText(artisan.email || artisan.users?.email || '');
+        const phone = normalizeText(artisan.telephone || '');
+        const contact = normalizeText(artisan.nomPrenomPersonneContact || '');
         const sousCategorie = normalizeText(artisan.sousCategories?.libelle || '');
         const categorie = normalizeText(artisan.sousCategories?.categories?.libelle || '');
+        const username = normalizeText(artisan.users?.username || '');
+        const idStr = String(artisan.idArtisan || '');
 
-        return nom.includes(searchTerm) ||
-               prenom.includes(searchTerm) ||
-               profession.includes(searchTerm) ||
-               adresse.includes(searchTerm) ||
-               sousCategorie.includes(searchTerm) ||
-               categorie.includes(searchTerm);
+        const haystacks = [
+          userFullName, userNom, userPrenom,
+          fullName, nom, prenom,
+          profession, adresse, email, username,
+          phone, contact, sousCategorie, categorie
+        ];
+
+        const matchWhole = (
+          userFullName.includes(searchTerm) ||
+          userNom.includes(searchTerm) ||
+          userPrenom.includes(searchTerm) ||
+          fullName.includes(searchTerm) ||
+          nom.includes(searchTerm) ||
+          prenom.includes(searchTerm) ||
+          profession.includes(searchTerm) ||
+          adresse.includes(searchTerm) ||
+          email.includes(searchTerm) ||
+          username.includes(searchTerm) ||
+          phone.includes(searchTerm) ||
+          contact.includes(searchTerm) ||
+          sousCategorie.includes(searchTerm) ||
+          categorie.includes(searchTerm) ||
+          idStr === query.trim()
+        );
+
+        const matchTokens = tokens.length > 1
+          ? tokens.some(t => haystacks.some(h => h.includes(t)))
+          : false;
+
+        return matchWhole || matchTokens;
+      };
+
+      let results = allArtisans.filter(filterFn);
+
+      // Vérifier présence explicite dans nom/prénom/nom complet
+      const foundByName = results.some(a => {
+        const nom = normalizeText(a.nom || '');
+        const prenom = normalizeText(a.prenom || '');
+        const fullName = `${prenom} ${nom}`.trim();
+        return (
+          nom.includes(searchTerm) ||
+          prenom.includes(searchTerm) ||
+          fullName.includes(searchTerm)
+        );
       });
+
+      // Si aucun résultat OU pas trouvé par le nom, rafraîchir et réessayer
+      if (results.length === 0 || !foundByName) {
+        console.log('🔄 Aucun résultat, tentative après rafraîchissement du cache...');
+        this.clearCache();
+        allArtisans = await this.getAllArtisans();
+        results = allArtisans.filter(filterFn);
+      }
       
       console.log(`✅ ${results.length} artisans trouvés pour "${query}"`);
       return results;

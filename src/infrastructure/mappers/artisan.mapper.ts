@@ -11,6 +11,7 @@ export class ArtisanMapper {
     
     return {
       id: apiArtisan.idArtisan?.toString() || `artisan-${Date.now()}-${Math.random()}`,
+      originalIdArtisan: apiArtisan.idArtisan, // Préserver l'ID original pour les liens
       name: fullName || 'Nom non disponible',
       profession: apiArtisan.profession || apiArtisan.sousCategories?.libelle || 'Profession non spécifiée',
       category: apiArtisan.sousCategories?.categories?.libelle || 'Catégorie inconnue',
@@ -29,13 +30,13 @@ export class ArtisanMapper {
       longitude: 0, // À calculer avec géolocalisation
       gallery: [], // Pas disponible dans l'API actuelle
       schedule: {
-        'Lundi': '08:00 - 18:00',
-        'Mardi': '08:00 - 18:00',
-        'Mercredi': '08:00 - 18:00',
-        'Jeudi': '08:00 - 18:00',
-        'Vendredi': '08:00 - 18:00',
+      'Lundi': '08:00 - 18:00',
+      'Mardi': '08:00 - 18:00',
+      'Mercredi': '08:00 - 18:00',
+      'Jeudi': '08:00 - 18:00',
+      'Vendredi': '08:00 - 18:00',
         'Samedi': '08:00 - 13:00',
-        'Dimanche': 'Fermé',
+      'Dimanche': 'Fermé',
       },
       reviews: [], // À charger séparément si disponible
     };

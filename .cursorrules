@@ -1,0 +1,18 @@
+# Règles de développement pour ce projet
+
+## Gestionnaire de paquets
+**TOUJOURS utiliser `pnpm` au lieu de `npm` pour toutes les opérations de gestion de paquets.**
+
+- ✅ Utiliser `pnpm install` au lieu de `npm install`
+- ✅ Utiliser `pnpm run dev` au lieu de `npm run dev`
+- ✅ Utiliser `pnpm add <package>` au lieu de `npm install <package>`
+- ✅ Utiliser `pnpm remove <package>` au lieu de `npm uninstall <package>`
+- ✅ Utiliser `pnpm exec <command>` au lieu de `npm exec <command>`
+
+Cette règle s'applique à :
+- Toutes les commandes terminal que je propose
+- Tous les scripts shell créés
+- Toute la documentation (README, guides, etc.)
+- Tous les exemples de code et commandes
+
+

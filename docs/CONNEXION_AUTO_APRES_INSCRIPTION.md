@@ -288,7 +288,7 @@ const register = async (data: RegisterData): Promise<void> => {
 git diff src/contexts/AuthContext.tsx
 
 # 2. Tester localement
-npm run dev
+pnpm run dev
 # → Tester l'inscription + connexion auto
 
 # 3. Tester les endpoints

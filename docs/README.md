@@ -43,7 +43,8 @@ Bienvenue dans le dossier de documentation du projet **ALONU** - Plateforme de m
 ### Pour un Testeur QA
 1. [INSCRIPTION_TESTS.md](./INSCRIPTION_TESTS.md) - Guide complet de test
 2. Utiliser `/test-auth-endpoints.js` pour les tests automatisés
-3. [RESUME_CORRECTIONS.md](./RESUME_CORRECTIONS.md) - Comprendre les corrections
+3. Scripts cURL rapides: voir section "Scripts cURL QA"
+4. [RESUME_CORRECTIONS.md](./RESUME_CORRECTIONS.md) - Comprendre les corrections
 
 ### Pour un Chef de Projet
 1. [RESUME_CORRECTIONS.md](./RESUME_CORRECTIONS.md) - Vue d'ensemble des corrections
@@ -92,6 +93,22 @@ Couverture confirmée:
 - Étudiant: via `inscription_projets` (listes, pagination, recherche, count, filtre par catégorie, création).
 
 Référence détaillée: voir `doc/API_INTEGRATION.md`.
+
+### Scripts cURL QA
+
+Des scripts rapides sont disponibles sous `scripts/` pour valider les principales fonctionnalités (nécessitent `BASE_URL` et `TOKEN`).
+
+Exemples:
+```bash
+# Admin
+BASE_URL="https://api.example.com" TOKEN="<accessToken>" bash scripts/qa-admin.sh
+
+# Artisans
+BASE_URL="https://api.example.com" TOKEN="<accessToken>" bash scripts/qa-artisans.sh "motclef"
+
+# Étudiants (inscriptions)
+BASE_URL="https://api.example.com" TOKEN="<accessToken>" bash scripts/qa-etudiants.sh "motclef" 0  
+```
 
 ## 📊 Architecture du Projet
 

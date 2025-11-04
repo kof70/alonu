@@ -172,13 +172,13 @@ Aucune nouvelle dépendance ajoutée. Utilisation des packages existants :
 git pull origin main
 
 # 2. Installer les dépendances (si nécessaire)
-npm install
+pnpm install
 
 # 3. Tester les endpoints
 node test-auth-endpoints.js
 
 # 4. Lancer l'application
-npm run dev
+pnpm run dev
 
 # 5. Tester l'inscription manuellement
 # Naviguer vers http://localhost:5173/register

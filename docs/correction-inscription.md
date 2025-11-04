@@ -143,7 +143,7 @@ node test-auth-endpoints.js
 ```
 
 ### Test du Formulaire Frontend
-1. Démarrer l'application : `npm run dev`
+1. Démarrer l'application : `pnpm run dev`
 2. Naviguer vers `/register`
 3. Remplir le formulaire sur les 3 étapes
 4. Vérifier la création du compte et la redirection

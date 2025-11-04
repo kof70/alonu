@@ -6,44 +6,10 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-
-  const socialLinks = [
-    {
-      name: 'Facebook',
-      icon: FaFacebook,
-      url: 'https://facebook.com/alonu',
-      color: 'hover:text-blue-600',
-    },
-    {
-      name: 'Twitter',
-      icon: FaTwitter,
-      url: 'https://twitter.com/alonu',
-      color: 'hover:text-sky-500',
-    },
-    {
-      name: 'Instagram',
-      icon: FaInstagram,
-      url: 'https://instagram.com/alonu',
-      color: 'hover:text-pink-600',
-    },
-    {
-      name: 'LinkedIn',
-      icon: FaLinkedin,
-      url: 'https://linkedin.com/company/alonu',
-      color: 'hover:text-blue-700',
-    },
-    {
-      name: 'YouTube',
-      icon: FaYoutube,
-      url: 'https://youtube.com/@alonu',
-      color: 'hover:text-red-600',
-    },
-  ];
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white">
@@ -81,28 +47,6 @@ export const Footer: React.FC = () => {
                 <Mail className="h-5 w-5 flex-shrink-0 text-primary" />
                 <span>contactalonu@gmail.com</span>
               </div>
-            </div>
-          </div>
-
-          {/* Social Icons */}
-          <div className="text-center md:text-right">
-            <h3 className="text-lg font-semibold mb-4">Suivez-nous</h3>
-            <div className="flex items-center space-x-4 justify-center md:justify-end">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-gray-400 ${social.color} transition-colors`}
-                    aria-label={social.name}
-                  >
-                    <Icon className="h-6 w-6" />
-                  </a>
-                );
-              })}
             </div>
           </div>
         </div>

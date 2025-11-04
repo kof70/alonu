@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Search, MapPin, Palette, Sparkles, Video, Shirt, TreePine, Building2, Mountain, ChevronLeft, ChevronRight, Grid3x3, List } from 'lucide-react'
@@ -8,6 +8,8 @@ import ArtisanCard from '@/components/ArtisanCard'
 import { useCategoriesContext } from '@/contexts/CategoryContext'
 import { useArtisanSearch } from '@/hooks/use-artisans'
 import { categoryService } from '@/core/services/category.service'
+import { artisanService } from '@/core/services/artisan.service'
+import { ArtisanMapper } from '@/infrastructure/mappers/artisan.mapper'
 
 const CategoriesArtisans: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
@@ -22,6 +24,31 @@ const CategoriesArtisans: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1)
   const [totalArtisans, setTotalArtisans] = useState(0)
   const itemsPerPage = 12
+
+  const normalizeQuery = (s: string) => s
+    ?.toLowerCase()
+    ?.normalize('NFD')
+    ?.replace(/\p{Diacritic}/gu, '')
+    ?.trim() || ''
+  // Recherche initiale via paramètre d'URL ?q=...
+  const location = useLocation()
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const q = params.get('q') || ''
+    if (q) {
+      // Réinitialiser la sélection de catégorie/sous-catégorie et lancer la recherche
+      setSelectedCategory('')
+      setSelectedCategoryId('')
+      setSelectedSpecialty('')
+      setSelectedSubcategoryId('')
+      setSearchQuery(q)
+      clearSearch()
+      // Lancer la recherche après setState
+      setTimeout(() => {
+        search(q)
+      }, 0)
+    }
+  }, [location.search])
 
   // Hooks pour récupérer les données de l'API
   const { categories: apiCategories, loading: categoriesLoading } = useCategoriesContext()
@@ -140,58 +167,44 @@ const CategoriesArtisans: React.FC = () => {
 
     try {
       setLoading(true)
-      const normalize = (s: string) => s
-        ?.toLowerCase()
-        ?.normalize('NFD')
-        ?.replace(/\p{Diacritic}/gu, '')
-        ?.trim() || ''
 
-      let data: any[] = []
+      let apiData = [] as any[]
 
-      // Si un ID de sous-catégorie est fourni, l'utiliser directement
+      // 1) Sous-catégorie prioritaire si ID
       if (subcategoryId) {
-        const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/artisans/sous_categorie/${subcategoryId}`)
-        if (!resp.ok) throw new Error('Erreur lors du chargement des artisans par sous-catégorie')
-        data = await resp.json()
+        apiData = await artisanService.getArtisansBySubcategory(parseInt(subcategoryId))
       } else if (specialtyName && specialtyName !== 'Toutes') {
-        // Sinon essayer de résoudre l'ID par le nom
+        // 2) Résoudre l'ID par nom si nécessaire
         const subId = await categoryService.findSubcategoryIdByName(categoryId, specialtyName)
         if (subId) {
-          const resp = await fetch(`${import.meta.env.VITE_API_BASE_URL}/artisans/sous_catégorie/${subId}`)
-          if (!resp.ok) throw new Error('Erreur lors du chargement des artisans par sous-catégorie')
-          data = await resp.json()
+          const subIdNum = typeof subId === 'string' ? parseInt(subId) : subId
+          apiData = await artisanService.getArtisansBySubcategory(subIdNum as number)
         }
       }
 
-      // Fallback: si pas de data par sous-catégorie, récupérer par catégorie
-      if (!Array.isArray(data) || data.length === 0) {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/artisans/categorie/${categoryId}`)
-        if (!response.ok) {
-          throw new Error('Erreur lors du chargement des artisans')
-        }
-        data = await response.json()
+      // 3) Fallback: filtrage par catégorie
+      if (!Array.isArray(apiData) || apiData.length === 0) {
+        apiData = await artisanService.getArtisansByCategory(parseInt(categoryId))
       }
 
-      // Filtrer par spécialité côté client si nécessaire (sécurise les différences d'accents/casse)
-      let filteredArtisans = data
+      // 4) Filtre de sécurité par spécialité (insensible casse/accents)
+      const normalize = (s: string) => s?.toLowerCase()?.normalize('NFD')?.replace(/\p{Diacritic}/gu, '')?.trim() || ''
+      let filtered = apiData
       if (specialtyName && specialtyName !== 'Toutes') {
         const needle = normalize(specialtyName)
-        filteredArtisans = data.filter((artisan: any) => {
-          const lib = normalize(artisan?.sousCategories?.libelle || '')
-          return lib.includes(needle)
-        })
+        filtered = apiData.filter((a: any) => normalize(a?.sousCategories?.libelle || '').includes(needle))
       }
-      
-      // Pagination côté client
+
+      // 5) Pagination + mapping vers format Artisan (UI)
       const startIndex = (page - 1) * itemsPerPage
       const endIndex = startIndex + itemsPerPage
-      const paginatedArtisans = filteredArtisans.slice(startIndex, endIndex)
-      
-      setArtisans(paginatedArtisans)
-      setTotalPages(Math.ceil(filteredArtisans.length / itemsPerPage))
-      setTotalArtisans(filteredArtisans.length)
+      const pageSlice = filtered.slice(startIndex, endIndex)
+      const mapped = ArtisanMapper.mapApiToArtisans(pageSlice)
+
+      setArtisans(mapped)
+      setTotalPages(Math.ceil(filtered.length / itemsPerPage))
+      setTotalArtisans(filtered.length)
       setCurrentPage(page)
-      
     } catch (error) {
       console.error('Erreur lors du chargement des artisans:', error)
       setArtisans([])
@@ -227,8 +240,9 @@ const CategoriesArtisans: React.FC = () => {
     
     // Attendre 500ms avant de lancer la recherche
     const timeout = window.setTimeout(() => {
-      console.log('🔍 Recherche lancée pour:', query)
-      search(query)
+      const qn = normalizeQuery(query)
+      console.log('🔍 Recherche lancée pour:', qn)
+      search(qn)
     }, 500)
     
     setSearchTimeout(timeout)
@@ -236,12 +250,13 @@ const CategoriesArtisans: React.FC = () => {
 
   const handleSearchButton = () => {
     if (searchQuery.trim()) {
-      console.log('🔍 Recherche bouton cliqué pour:', searchQuery)
+      const qn = normalizeQuery(searchQuery)
+      console.log('🔍 Recherche bouton cliqué pour:', qn)
       // Annuler le debounce et lancer immédiatement
       if (searchTimeout) {
         clearTimeout(searchTimeout)
       }
-      search(searchQuery)
+      search(qn)
     }
   }
 
@@ -437,7 +452,7 @@ const CategoriesArtisans: React.FC = () => {
                   {categories.map((category) => (
                     <Card 
                       key={category.id}
-                      className={`flex-shrink-0 w-72 cursor-pointer transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-1 ${
+                      className={`flex-shrink-0 w-80 min-h-[11.25rem] cursor-pointer transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-1 ${
                         category.name === selectedCategory ? 'bg-primary text-white shadow-lg' : 'bg-white hover:bg-orange-50'
                       }`}
                       onClick={() => handleCategoryChange(category.name, category.id.toString())}
@@ -447,7 +462,7 @@ const CategoriesArtisans: React.FC = () => {
                           <div className={`p-2 rounded-lg transition-all duration-300 ${
                             category.name === selectedCategory ? 'bg-white/20' : 'bg-orange-100'
                           }`}>
-                            <category.icon className={`w-8 h-8 transition-colors duration-300 ${
+                            <category.icon className={`w-9 h-9 transition-colors duration-300 ${
                               category.name === selectedCategory ? 'text-white' : 'text-primary'
                             }`} />
                           </div>
