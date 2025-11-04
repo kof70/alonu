@@ -1,4 +1,5 @@
 import { API_CONFIG, getAuthHeaders } from '../config/api.config';
+import { logger } from '../utils/logger';
 
 export interface ApiResponse<T> {
   data: T;
@@ -18,6 +19,10 @@ export interface PaginatedResponse<T> {
 class ApiClient {
   private baseURL: string;
   private authToken: string | null = null;
+  private authInProgress: boolean = false;
+  private authFailed: boolean = false;
+  private authFailureCount: number = 0;
+  private readonly MAX_AUTH_ATTEMPTS = 3;
 
   constructor() {
     this.baseURL = API_CONFIG.baseURL;
@@ -33,30 +38,55 @@ class ApiClient {
       return this.authToken;
     }
 
-    try {
-      // 2. Vérifier le cache localStorage (rapide)
-      const cachedToken = localStorage.getItem('alonu_auth_token');
-      const tokenTimestamp = localStorage.getItem('alonu_auth_timestamp');
+    // 2. Vérifier le cache localStorage (rapide)
+    let cachedToken = localStorage.getItem('alonu_auth_token');
+    const tokenTimestamp = localStorage.getItem('alonu_auth_timestamp');
+    
+    if (cachedToken && tokenTimestamp) {
+      const now = Date.now();
+      const tokenAge = now - parseInt(tokenTimestamp);
+      const TOKEN_DURATION = 60 * 60 * 1000; // 1 heure (plus long)
       
-      if (cachedToken && tokenTimestamp) {
-        const now = Date.now();
-        const tokenAge = now - parseInt(tokenTimestamp);
-        const TOKEN_DURATION = 60 * 60 * 1000; // 1 heure (plus long)
-        
-        if (tokenAge < TOKEN_DURATION) {
-          console.log('🚀 Token en cache - retour immédiat');
-          this.authToken = cachedToken;
-          return this.authToken;
-        } else {
-          console.log('⏰ Token expiré - nettoyage du cache');
-          localStorage.removeItem('alonu_auth_token');
-          localStorage.removeItem('alonu_auth_timestamp');
-        }
+      if (tokenAge < TOKEN_DURATION) {
+        logger.log('🚀 Token en cache - retour immédiat');
+        this.authToken = cachedToken;
+        return this.authToken;
+      } else {
+        logger.log('⏰ Token expiré - nettoyage du cache');
+        localStorage.removeItem('alonu_auth_token');
+        localStorage.removeItem('alonu_auth_timestamp');
       }
+    }
 
-      // 3. Authentification seulement si nécessaire
-      console.log('🔐 Tentative d\'authentification automatique...');
-      console.log(`📡 URL: ${this.baseURL}/auth/signin`);
+    // 2b. Fallback: utiliser un accessToken existant si présent (cohérence avec AuthContext)
+    const storedAccessToken = localStorage.getItem('accessToken');
+    if (storedAccessToken) {
+      this.authToken = storedAccessToken;
+      // Optionnel: aligner le cache pour 1h si timestamp absent
+      if (!localStorage.getItem('alonu_auth_timestamp')) {
+        localStorage.setItem('alonu_auth_token', storedAccessToken);
+        localStorage.setItem('alonu_auth_timestamp', Date.now().toString());
+      }
+      return this.authToken;
+    }
+
+    // 3. Authentification seulement si nécessaire et si pas déjà en cours
+    if (this.authInProgress || this.authFailed) {
+      return null;
+    }
+
+    // Vérifier le nombre de tentatives
+    if (this.authFailureCount >= this.MAX_AUTH_ATTEMPTS) {
+      this.authFailed = true;
+      logger.warn('⚠️ Trop de tentatives d\'authentification, arrêt des tentatives');
+      return null;
+    }
+
+    this.authInProgress = true;
+    this.authFailureCount++;
+
+    try {
+      logger.log('🔐 Tentative d\'authentification automatique...');
       const authStart = performance.now();
       
       const requestBody = {
@@ -73,11 +103,11 @@ class ApiClient {
         body: JSON.stringify(requestBody)
       });
 
-      console.log(`📥 Réponse authentification: ${response.status} ${response.statusText}`);
+      logger.log(`📥 Réponse authentification: ${response.status} ${response.statusText}`);
       
       if (response.ok) {
         const data = await response.json();
-        console.log('📦 Données reçues:', { 
+        logger.log('📦 Données reçues:', { 
           hasAccessToken: !!data.accessToken, 
           hasToken: !!data.token,
           keys: Object.keys(data)
@@ -90,40 +120,26 @@ class ApiClient {
           localStorage.setItem('alonu_auth_token', this.authToken);
           localStorage.setItem('alonu_auth_timestamp', Date.now().toString());
           
+          // Réinitialiser les compteurs en cas de succès
+          this.authFailed = false;
+          this.authFailureCount = 0;
+          
           const authTime = performance.now() - authStart;
-          console.log(`✅ Authentification réussie: ${authTime.toFixed(2)}ms (mise en cache 1h)`);
+          logger.log(`✅ Authentification réussie: ${authTime.toFixed(2)}ms (mise en cache 1h)`);
           return this.authToken;
         } else {
-          console.error('❌ Token non trouvé dans la réponse:', data);
+          logger.error('❌ Token non trouvé dans la réponse');
         }
       } else {
-        // Log l'erreur avec plus de détails
-        let errorText = '';
-        let errorData = null;
-        try {
-          errorText = await response.text();
-          if (errorText) {
-            try {
-              errorData = JSON.parse(errorText);
-            } catch {
-              // Ce n'est pas du JSON, on garde le texte brut
-            }
-          }
-        } catch (e) {
-          console.warn('Impossible de lire la réponse d\'erreur:', e);
-        }
-        
-        console.error(`❌ Authentification automatique échouée (${response.status}):`, {
-          status: response.status,
-          statusText: response.statusText,
-          errorText: errorText ? errorText.substring(0, 200) : 'Aucun message',
-          errorData: errorData
-        });
-        console.warn('ℹ️ Les endpoints publics continueront de fonctionner sans authentification');
+        // En production, ne pas logger les détails d'erreur
+        logger.error(`❌ Authentification automatique échouée (${response.status})`);
+        logger.warn('ℹ️ Les endpoints publics continueront de fonctionner sans authentification');
       }
     } catch (error) {
-      console.warn('⚠️ Erreur lors de l\'authentification automatique:', error);
-      console.warn('ℹ️ Les endpoints publics continueront de fonctionner sans authentification');
+      logger.warn('⚠️ Erreur lors de l\'authentification automatique');
+      logger.warn('ℹ️ Les endpoints publics continueront de fonctionner sans authentification');
+    } finally {
+      this.authInProgress = false;
     }
 
     return null;
@@ -158,11 +174,24 @@ class ApiClient {
     };
 
     try {
-      let response = await fetch(url, config);
+      // Intercepter les erreurs fetch pour éviter les logs natives du navigateur en production
+      const isProduction = import.meta.env.MODE === 'production';
+      let response: Response;
+      
+      try {
+        response = await fetch(url, config);
+      } catch (fetchError) {
+        // En production, masquer les erreurs réseau natives
+        if (isProduction) {
+          logger.error('Network error');
+          throw new Error('Network error');
+        }
+        throw fetchError;
+      }
       
       // Si 401 et qu'on avait un token, essayer sans token (endpoint potentiellement public)
       if (!response.ok && response.status === 401 && token && !isAuthEndpoint) {
-        console.warn(`⚠️ Requête refusée avec token (401), tentative sans authentification pour: ${endpoint}`);
+        logger.warn(`⚠️ Requête refusée avec token (401), tentative sans authentification pour: ${endpoint}`);
         const retryConfig: RequestInit = {
           ...options,
           headers: {
@@ -170,7 +199,16 @@ class ApiClient {
             ...options.headers,
           },
         };
-        const retryResponse = await fetch(url, retryConfig);
+        let retryResponse: Response;
+        try {
+          retryResponse = await fetch(url, retryConfig);
+        } catch (retryError) {
+          if (isProduction) {
+            logger.error('Network error');
+            throw new Error('Network error');
+          }
+          throw retryError;
+        }
         if (retryResponse.ok) {
           // Endpoint public, continuer avec la réponse
           const retryData = await this.parseResponse(retryResponse);
@@ -223,7 +261,15 @@ class ApiClient {
         status: response.status,
       };
     } catch (error) {
-      console.error('API request failed:', error);
+      logger.error('API request failed:', error);
+      // En production, masquer les détails techniques
+      const isProduction = import.meta.env.MODE === 'production';
+      if (isProduction && error instanceof Error) {
+        // Créer une erreur générique sans détails techniques
+        const genericError = new Error('Une erreur est survenue');
+        genericError.name = error.name;
+        throw genericError;
+      }
       throw error;
     }
   }

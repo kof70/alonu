@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { apiClient } from '../infrastructure/api/api.client'
 import { User, LoginCredentials, RegisterData, AuthResponse } from '../core/domain/types'
 import { AuthRepository } from '../infrastructure/repositories/auth.repository'
 import { 
@@ -69,6 +70,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setAccessToken(storedAccessToken)
           setRefreshToken(storedRefreshToken)
       setUser(JSON.parse(storedUser))
+          // Synchroniser le client API avec le token existant
+          apiClient.setAuthToken(storedAccessToken)
         } else {
           // Essayer de récupérer l'utilisateur actuel
           const currentUser = await getCurrentUserUseCase.execute()
@@ -97,6 +100,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(response.user)
       setAccessToken(response.accessToken)
       setRefreshToken(response.refreshToken)
+      // Mettre à jour le cache partagé pour le client API
+      if (response.accessToken) {
+        localStorage.setItem('alonu_auth_token', response.accessToken)
+        localStorage.setItem('alonu_auth_timestamp', Date.now().toString())
+        apiClient.setAuthToken(response.accessToken)
+      }
     } catch (error) {
       console.error('Erreur lors de la connexion:', error)
       throw error
@@ -115,6 +124,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(response.user)
         setAccessToken(response.accessToken)
         setRefreshToken(response.refreshToken)
+        // Mettre à jour le cache partagé pour le client API
+        localStorage.setItem('alonu_auth_token', response.accessToken)
+        localStorage.setItem('alonu_auth_timestamp', Date.now().toString())
+        apiClient.setAuthToken(response.accessToken)
       } else {
         // Sinon, connecter automatiquement l'utilisateur après inscription
         console.log('Inscription réussie, connexion automatique en cours...')

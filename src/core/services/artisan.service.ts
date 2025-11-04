@@ -1,4 +1,5 @@
 import { apiClient } from '@/infrastructure/api/api.client';
+import { logger } from '@/infrastructure/utils/logger';
 
 export interface ArtisanResponse {
   idArtisan: number;
@@ -54,11 +55,11 @@ export class ArtisanService {
       
       // Vérifier le cache
       if (this.artisansCache && (now - this.cacheTimestamp) < this.CACHE_DURATION) {
-        console.log('🚀 Cache artisans utilisé');
+        logger.log('🚀 Cache artisans utilisé');
         return this.artisansCache;
       }
 
-      console.log('⚡ Chargement de tous les artisans depuis l\'API...');
+      logger.log('⚡ Chargement de tous les artisans depuis l\'API...');
       const response = await apiClient.get<ArtisanResponse[]>('/artisans');
       
       const artisans = Array.isArray(response.data) ? response.data : [];
@@ -67,10 +68,10 @@ export class ArtisanService {
       this.artisansCache = artisans;
       this.cacheTimestamp = now;
 
-      console.log(`✅ ${artisans.length} artisans chargés et mis en cache`);
+      logger.log(`✅ ${artisans.length} artisans chargés et mis en cache`);
       return artisans;
     } catch (error) {
-      console.error('❌ Erreur lors du chargement des artisans:', error);
+      logger.error('❌ Erreur lors du chargement des artisans:', error);
       return [];
     }
   }
@@ -80,17 +81,17 @@ export class ArtisanService {
    */
   async getArtisansByCategory(categoryId: number): Promise<ArtisanResponse[]> {
     try {
-      console.log(`📂 Filtrage artisans pour catégorie ${categoryId}`);
+      logger.log(`📂 Filtrage artisans pour catégorie ${categoryId}`);
       const allArtisans = await this.getAllArtisans();
       
       const filtered = allArtisans.filter(artisan => 
         artisan.sousCategories?.categories?.idCategorie === categoryId
       );
       
-      console.log(`✅ ${filtered.length} artisans trouvés pour catégorie ${categoryId}`);
+      logger.log(`✅ ${filtered.length} artisans trouvés pour catégorie ${categoryId}`);
       return filtered;
     } catch (error) {
-      console.error(`❌ Erreur filtrage catégorie ${categoryId}:`, error);
+      logger.error(`❌ Erreur filtrage catégorie ${categoryId}:`, error);
       return [];
     }
   }
@@ -100,17 +101,17 @@ export class ArtisanService {
    */
   async getArtisansBySubcategory(subcategoryId: number): Promise<ArtisanResponse[]> {
     try {
-      console.log(`📍 Filtrage artisans pour sous-catégorie ${subcategoryId}`);
+      logger.log(`📍 Filtrage artisans pour sous-catégorie ${subcategoryId}`);
       const allArtisans = await this.getAllArtisans();
       
       const filtered = allArtisans.filter(artisan => 
         artisan.sousCategories?.idSousCategorie === subcategoryId
       );
       
-      console.log(`✅ ${filtered.length} artisans trouvés pour sous-catégorie ${subcategoryId}`);
+      logger.log(`✅ ${filtered.length} artisans trouvés pour sous-catégorie ${subcategoryId}`);
       return filtered;
     } catch (error) {
-      console.error(`❌ Erreur filtrage sous-catégorie ${subcategoryId}:`, error);
+      logger.error(`❌ Erreur filtrage sous-catégorie ${subcategoryId}:`, error);
       return [];
     }
   }
@@ -124,7 +125,7 @@ export class ArtisanService {
       return [];
     }
 
-      console.log(`🔍 Recherche artisans: "${query}"`);
+      logger.log(`🔍 Recherche artisans: "${query}"`);
       let allArtisans = await this.getAllArtisans();
       
       const normalizeText = (text: string) => {
@@ -204,16 +205,16 @@ export class ArtisanService {
 
       // Si aucun résultat OU pas trouvé par le nom, rafraîchir et réessayer
       if (results.length === 0 || !foundByName) {
-        console.log('🔄 Aucun résultat, tentative après rafraîchissement du cache...');
+        logger.log('🔄 Aucun résultat, tentative après rafraîchissement du cache...');
         this.clearCache();
         allArtisans = await this.getAllArtisans();
         results = allArtisans.filter(filterFn);
       }
       
-      console.log(`✅ ${results.length} artisans trouvés pour "${query}"`);
+      logger.log(`✅ ${results.length} artisans trouvés pour "${query}"`);
       return results;
     } catch (error) {
-      console.error('❌ Erreur recherche artisans:', error);
+      logger.error('❌ Erreur recherche artisans:', error);
       return [];
     }
   }
@@ -226,7 +227,7 @@ export class ArtisanService {
       const allArtisans = await this.getAllArtisans();
       return allArtisans.find(a => a.idArtisan === id) || null;
     } catch (error) {
-      console.error(`❌ Erreur récupération artisan ${id}:`, error);
+      logger.error(`❌ Erreur récupération artisan ${id}:`, error);
       return null;
     }
   }
@@ -237,7 +238,7 @@ export class ArtisanService {
   clearCache(): void {
     this.artisansCache = null;
     this.cacheTimestamp = 0;
-    console.log('🗑️ Cache artisans vidé');
+    logger.log('🗑️ Cache artisans vidé');
   }
 }
 

@@ -1,5 +1,6 @@
 import { apiClient } from './api.client';
 import { API_CONFIG } from '../config/api.config';
+import { logger } from '../utils/logger';
 
 export interface CategoryApiResponse {
   idCategorie: number;
@@ -32,7 +33,7 @@ export class CategoryApiService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      logger.error('Error fetching categories:', error);
       throw error;
     }
   }
@@ -44,7 +45,7 @@ export class CategoryApiService {
       );
       return response.data;
     } catch (error) {
-      console.error(`Error fetching category ${id}:`, error);
+      logger.error(`Error fetching category ${id}:`, error);
       throw error;
     }
   }
@@ -56,7 +57,7 @@ export class CategoryApiService {
       );
       return response.data;
     } catch (error) {
-      console.error(`Error searching categories with query "${query}":`, error);
+      logger.error(`Error searching categories with query "${query}":`, error);
       throw error;
     }
   }
@@ -68,7 +69,7 @@ export class CategoryApiService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching subcategories:', error);
+      logger.error('Error fetching subcategories:', error);
       throw error;
     }
   }
@@ -80,7 +81,7 @@ export class CategoryApiService {
       );
       return response.data;
     } catch (error) {
-      console.error(`Error fetching subcategories for category ${categoryId}:`, error);
+      logger.error(`Error fetching subcategories for category ${categoryId}:`, error);
       throw error;
     }
   }

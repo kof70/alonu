@@ -3,6 +3,7 @@ import { categoryApiService, SubcategoryApiResponse } from '@/infrastructure/api
 import { apiClient } from '@/infrastructure/api/api.client';
 import { ENV_CONFIG } from '@/infrastructure/config/env.config';
 import { CategoryMapper } from '@/infrastructure/mappers/category.mapper';
+import { logger } from '@/infrastructure/utils/logger';
 
 export class CategoryService {
   private categoriesCache: Category[] | null = null;
@@ -15,7 +16,7 @@ export class CategoryService {
       // Vérifier le cache avec timestamp
       const now = Date.now();
       if (this.categoriesCache && (now - this.cacheTimestamp) < this.CACHE_DURATION) {
-        console.log('🚀 Utilisation du cache pour les catégories');
+        logger.log('🚀 Utilisation du cache pour les catégories');
         return this.categoriesCache;
       }
 
@@ -64,7 +65,7 @@ export class CategoryService {
 
       return categories;
     } catch (error) {
-      console.error('Error in CategoryService.getAllCategories:', error);
+      logger.error('Error in CategoryService.getAllCategories:', error);
       // Retourner des données de fallback en cas d'erreur
       return this.getFallbackCategories();
     }
@@ -77,7 +78,7 @@ export class CategoryService {
       
       return CategoryMapper.mapApiToCategory(apiCategory, subcategories);
     } catch (error) {
-      console.error(`Error in CategoryService.getCategoryById for id ${id}:`, error);
+      logger.error(`Error in CategoryService.getCategoryById for id ${id}:`, error);
       return null;
     }
   }
@@ -89,7 +90,7 @@ export class CategoryService {
       
       return CategoryMapper.mapApiToCategories(apiCategories, subcategories);
     } catch (error) {
-      console.error(`Error in CategoryService.searchCategories for query "${query}":`, error);
+      logger.error(`Error in CategoryService.searchCategories for query "${query}":`, error);
       return [];
     }
   }

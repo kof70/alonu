@@ -14,4 +14,15 @@ export default defineConfig({
     host: true,
     port: 5173,
   },
+  build: {
+    // Minifier et obfusquer le code en production
+    minify: 'esbuild',
+    sourcemap: false, // Pas de sourcemap en production pour masquer le code source
+    rollupOptions: {
+      output: {
+        // Masquer les noms de fichiers pour éviter l'exposition de la structure
+        manualChunks: undefined,
+      },
+    },
+  },
 })
