@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { apiClient } from '../infrastructure/api/api.client'
-import { User, LoginCredentials, RegisterData, AuthResponse } from '../core/domain/types'
+import { User, LoginCredentials, RegisterData } from '../core/domain/types'
 import { AuthRepository } from '../infrastructure/repositories/auth.repository'
 import { 
   LoginUseCase, 
   RegisterUseCase, 
   LogoutUseCase, 
   GetCurrentUserUseCase,
-  RefreshTokenUseCase,
   CheckUsernameUseCase,
   CheckEmailUseCase,
   CheckTelephoneUseCase,
@@ -51,7 +50,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const registerUseCase = new RegisterUseCase(authRepository)
   const logoutUseCase = new LogoutUseCase(authRepository)
   const getCurrentUserUseCase = new GetCurrentUserUseCase(authRepository)
-  const refreshTokenUseCase = new RefreshTokenUseCase(authRepository)
   const checkUsernameUseCase = new CheckUsernameUseCase(authRepository)
   const checkEmailUseCase = new CheckEmailUseCase(authRepository)
   const checkTelephoneUseCase = new CheckTelephoneUseCase(authRepository)
@@ -64,12 +62,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const storedAccessToken = localStorage.getItem('accessToken')
         const storedRefreshToken = localStorage.getItem('refreshToken')
-    const storedUser = localStorage.getItem('user')
+        const storedUser = localStorage.getItem('user')
     
         if (storedAccessToken && storedRefreshToken && storedUser) {
           setAccessToken(storedAccessToken)
           setRefreshToken(storedRefreshToken)
-      setUser(JSON.parse(storedUser))
+          setUser(JSON.parse(storedUser))
           // Synchroniser le client API avec le token existant
           apiClient.setAuthToken(storedAccessToken)
         } else {
@@ -118,7 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true)
     try {
       const response = await registerUseCase.execute(data)
-      
+
       // Si l'inscription retourne les tokens, les utiliser directement
       if (response.accessToken && response.refreshToken && response.user) {
         setUser(response.user)
@@ -148,7 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true)
     try {
       await logoutUseCase.execute()
-    setUser(null)
+      setUser(null)
       setAccessToken(null)
       setRefreshToken(null)
     } catch (error) {
@@ -211,11 +209,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
-
-
-
-
-
 
 
 
